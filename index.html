@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Jungle Adventure - English Learning Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>RESONANCE - Recount and Social Narrative for Creative English</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,29 +43,26 @@
     }
 
     /* Main Container Frame */
-    #game-container {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      height: 100dvh;
-      max-width: 480px; 
-      max-height: 920px;
-      background: linear-gradient(to bottom, #a8dadc, #1b4332);
-      border-radius: 0px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
+#game-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background: linear-gradient(to bottom, #a8dadc, #1b4332);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
-    @media (min-width: 768px) {
-      #game-container {
-        border-radius: 20px;
-        height: 95vh;
-        max-height: 850px;
-        max-width: 450px;
-      }
-    }
+@media (min-width: 768px) {
+  #game-container {
+    max-width: 450px;
+    height: 95vh;
+    max-height: 850px;
+    border-radius: 20px;
+  }
+}
 
     .screen {
       position: absolute;
@@ -132,7 +128,7 @@
 
     /* --- SCREEN 1: WELCOME MENU --- */
     #welcome-screen {
-      background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url('https://i.imgur.com/LiCPWHv.jpg') center/cover no-repeat;
+      background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url('https://i.imgur.com/pE316dk.jpg') center/cover no-repeat;
       justify-content: center;
       gap: 20px;
       padding-top: 20px;
@@ -787,7 +783,7 @@
         <img id="audio-icon-img" src="https://i.imgur.com/M5nSC85.png" alt="Audio Muted">
       </button>
       <button class="control-btn" onclick="returnToHome()" title="Home">
-        <img src="https://i.imgur.com/8Q9Z5bX.png" alt="Home" style="width: 22px; height: 22px; object-fit: contain;" onerror="this.onerror=null; this.src='https://imgur.com/undefined';">
+        <img src="https://i.imgur.com/sb3ZuhQ.png" alt="Home" style="width: 22px; height: 22px; object-fit: contain;" onerror="this.onerror=null; this.src='https://imgur.com/undefined';">
       </button>
     </div>
 
@@ -803,8 +799,7 @@
     <div id="welcome-screen" class="screen active">
       <img src="https://i.imgur.com/GLtaHCS.png" alt="Mascot" style="position: absolute; bottom: 15px; right: 15px; width: 110px; height: auto; z-index: 10; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5)); pointer-events: none;">
       <div class="welcome-hero">
-        <div class="jungle-badge">🌴 ENGLISH LEARNING GAME 🌴</div>
-        <img src="https://i.imgur.com/tfchBec.png" alt="Jungle Adventure" class="game-title-img">
+        <img src="https://i.imgur.com/lEdkapS.png" alt="Jungle Adventure" class="game-title-img">
       </div>
       <div class="login-box">
         <label for="username-input">WRITE YOUR NAME:</label>
@@ -1226,17 +1221,23 @@ const narrativeData = {
           ]
         }
       ],
-      "Narrative Text": [
+     "Narrative Text": [
         {
-          title: "The Smart Monkey and Crocodile",
-          text: "Once upon a time, a clever monkey lived on a large apple tree near a river. A hungry crocodile wanted to catch him, but the monkey tricked him using his intelligence.",
-          vocab: "<b>Clever:</b> Cerdas<br><b>Tricked:</b> Menipu/Mengelabui<br><b>Intelligence:</b> Kecerdasan",
-          questions: ["1. Where did the clever monkey live?", "2. Who wanted to catch the monkey?", "3. How did the monkey save himself?"]
+          title: "The Legend of Muntilan",
+          text: "A long time ago, around the year 1812, a smart British leader named Sir Thomas Stamford Raffles led an expedition deep into the southern area of Magelang, Java. In the middle of their journey, the British explorers suddenly stopped in their tracks, completely amazed by the breathtaking scenery around them. They realized that the place where they stood was uniquely surrounded by a giant ring of five magnificent mountains: Mount Merapi, Merbabu, Telomoyo-Andong, Sumbing, and the Menoreh Hills. Fascinated by this beautiful landscape, Raffles spontaneously shouted, \"Look! This is a beautiful Mount Land!\"<br><br>From that day on, the British soldiers always called the fertile area \"Mount Land\". However, the local Javanese people living there did not speak English at all. For their tongues, pronouncing the words \"Mount Land\" was very difficult, strange, and foreign. But because they heard the British soldiers repeat the phrase every single day, the locals naturally began to mimic the sound using their own local accent.<br><br>Through daily conversations, a unique language shift happened among the villagers. The word \"Mount\" slowly turned into \"Munt-\", while the word \"Land\" shifted into \"-lan\". Over time, the local Javanese dialect permanently combined the two English words into one simple, easy-to-say name: Muntilan. Today, this historical name stands as a beautiful reminder of how Indonesia's incredible nature once captivated the world.",
+          vocab: "<b>Expedition (noun):</b> Ekspedisi / Perjalanan penyelidikan<br><b>Explorers (noun):</b> Penjelajah<br><b>Breathtaking (adjective):</b> Sangat indah (sampai mendebarkan hati)<br><b>Scenery (noun):</b> Pemandangan alam<br><b>Magnificent (adjective):</b> Megah / Sangat indah<br><b>Fascinated (adjective):</b> Terpesona / Sangat tertarik<br><b>Spontaneously (adverb):</b> Secara spontan / Serta-merta<br><b>Fertile (adjective):</b> Subur<br><b>Pronouncing (verb):</b> Mengucapkan / Melafalkan<br><b>Foreign (adjective):</b> Asing<br><b>Mimic (verb):</b> Meniru / Menirukan<br><b>Shift (noun):</b> Pergeseran / Perubahan<br><b>Dialect (noun):</b> Dialek / Logat daerah<br><b>Permanently (adverb):</b> Secara permanen / Selamanya<br><b>Captivated (verb):</b> Memikat / Memesona",
+          questions: [
+            "1. Who was the leader of the British expedition in Java around 1812?",
+            "2. Why did Sir Thomas Stamford Raffles call the area \"Mount Land\"?",
+            "3. Mention the five mountains that surround the area of Muntilan!",
+            "4. Why did the local Javanese people change the pronunciation from \"Mount Land\" to \"Muntilan\"?",
+            "5. What can we learn from the story about Indonesia's nature?"
+          ]
         }
       ]
-    };
-
-    const fillBlankDatabase = {
+   };
+   
+ const fillBlankDatabase = {
       "Narrative Text": {
         title: "The Tiger and The Brave Rabbit",
         wordBox: ["lived", "forest", "found", "decided", "walked", "saw", "tricked", "ran", "escaped", "happy"],
@@ -1804,5 +1805,4 @@ function renderNarrativeDetail() {
   </script>
 </body>
 </html>
-```
 
