@@ -39,14 +39,16 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      width: 100vw;
+      height: 100dvh;
+      width: 100%;
     }
 
     /* Main Container Frame */
     #game-container {
       position: relative;
-      width: 100vw;
+      width: 100%;
       height: 100vh;
+      height: 100dvh;
       max-width: 480px; 
       max-height: 920px;
       background: linear-gradient(to bottom, #a8dadc, #1b4332);
@@ -77,6 +79,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 60px 15px 20px 15px;
+      overflow-y: auto;
       background-size: cover;
       background-position: center;
       box-sizing: border-box;
@@ -85,6 +88,10 @@
     .screen.active {
       display: flex;
     }
+
+.screen > * {
+  flex-shrink: 0;
+}
 
     /* Controls Header */
     .global-controls {
@@ -125,7 +132,7 @@
 
     /* --- SCREEN 1: WELCOME MENU --- */
     #welcome-screen {
-      background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url('https://i.imgur.com/DhUC65Q.jpg') center/cover no-repeat;
+      background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url('https://i.imgur.com/LiCPWHv.jpg') center/cover no-repeat;
       justify-content: center;
       gap: 20px;
       padding-top: 20px;
@@ -651,7 +658,9 @@
     .simulation-area {
       position: relative;
       width: 100%;
-      height: 150px;
+      height: 18vh;
+      min-height: 100px;
+      max-height: 150px;
       background: rgba(255,255,255,0.15);
       border-radius: 15px;
       overflow: hidden;
@@ -1012,6 +1021,7 @@
     let activeTense = 'Simple Past'; 
     let activeTenseTab = 'meaning';
     let activeRecountTab = 'meaning';
+    let activeNarrativeTab = 'meaning';
 
     // Tone.js Audio Setup
     let isMuted = true;
@@ -1142,6 +1152,42 @@
       ]
     };
 
+const narrativeData = {
+  meaning: {
+    en: "<p><strong>Narrative Text</strong> is a text that tells a story, usually imaginary, with a problem that is finally solved. It is written to entertain the readers.</p>",
+    id: "<p><strong>Narrative Text</strong> adalah teks yang menceritakan sebuah cerita, biasanya fiksi, yang memuat masalah dan akhirnya terselesaikan. Teks ini ditulis untuk menghibur pembaca.</p>"
+  },
+  purpose: {
+    en: "<ul style='margin-left:18px; line-height:1.6;'><li>To entertain the readers.</li><li>To share moral values and life lessons.</li><li>To preserve culture and traditional stories.</li><li>To stimulate imagination.</li></ul>",
+    id: "<ul style='margin-left:18px; line-height:1.6;'><li>Menghibur pembaca.</li><li>Menyampaikan nilai moral dan pelajaran hidup.</li><li>Melestarikan budaya dan cerita tradisional.</li><li>Merangsang imajinasi.</li></ul>"
+  },
+  structure: {
+    en: "<div style='line-height:1.6;'><strong>1. Orientation:</strong> Introduces the characters, place, and time.<br><br><strong>2. Complication:</strong> The conflict or main problem begins to arise.<br><br><strong>3. Resolution:</strong> The problem is solved (happy or sad ending).<br><br><strong>4. Coda (optional):</strong> The moral lesson or message of the story.</div>",
+    id: "<div style='line-height:1.6;'><strong>1. Orientation (Pengenalan):</strong> Mengenalkan tokoh, tempat, dan waktu cerita.<br><br><strong>2. Complication (Konflik):</strong> Masalah utama mulai muncul dalam cerita.<br><br><strong>3. Resolution (Penyelesaian):</strong> Masalah berhasil diatasi (akhir bahagia/sedih).<br><br><strong>4. Coda (opsional):</strong> Pesan moral atau pelajaran dari cerita.</div>"
+  },
+  types: {
+    en: "<div style='line-height:1.6;'><strong>1. Fable:</strong> Stories about animals that act like humans (The Smart Monkey and Crocodile).<br><br><strong>2. Legend:</strong> Stories about the origin of a place or event (Malin Kundang).<br><br><strong>3. Myth:</strong> Stories about gods, spirits, or supernatural beings.<br><br><strong>4. Fairy Tale:</strong> Imaginative stories with magic (Cinderella).</div>",
+    id: "<div style='line-height:1.6;'><strong>1. Fable (Fabel):</strong> Cerita tentang hewan yang bertingkah seperti manusia (Kancil dan Buaya).<br><br><strong>2. Legend (Legenda):</strong> Cerita tentang asal-usul suatu tempat atau peristiwa (Malin Kundang).<br><br><strong>3. Myth (Mitos):</strong> Cerita tentang dewa, roh, atau makhluk gaib.<br><br><strong>4. Fairy Tale (Dongeng):</strong> Cerita khayalan yang mengandung sihir (Cinderella).</div>"
+  },
+  language: {
+    en: "<div style='line-height:1.6;'><strong>1. Simple Past Tense:</strong> Main tense of the story.<br><em>Examples: The tiger ran away.</em><br><br><strong>2. Past Continuous Tense:</strong> Background actions.<br><em>Examples: The rabbit was walking in the forest.</em><br><br><strong>3. Time Connectives:</strong> Order the events.<br><em>Examples: Once upon a time, one day, suddenly, finally.</em><br><br><strong>4. Action Verbs & Adjectives:</strong> Make the story lively.<br><em>Examples: jumped, escaped, brave, hungry.</em></div>",
+    id: "<div style='line-height:1.6;'><strong>1. Simple Past Tense:</strong> Tense utama dalam cerita.<br><em>Contoh: The tiger ran away.</em><br><br><strong>2. Past Continuous Tense:</strong> Kegiatan latar belakang.<br><em>Contoh: The rabbit was walking in the forest.</em><br><br><strong>3. Time Connectives:</strong> Penghubung urutan waktu.<br><em>Contoh: Once upon a time, one day, suddenly, finally.</em><br><br><strong>4. Action Verbs & Adjectives:</strong> Kata kerja aksi dan kata sifat.<br><em>Contoh: jumped, escaped, brave, hungry.</em></div>"
+  },
+  example: [
+    {
+      en: "(Orientation) Long ago, a brave rabbit lived in a green jungle.",
+      id: "(Orientation / Pengenalan) Dahulu kala, seekor kelinci pemberani tinggal di hutan yang hijau."
+    },
+    {
+      en: "(Complication) One day, he met a hungry tiger. The tiger wanted to eat him.",
+      id: "(Complication / Konflik) Suatu hari, dia bertemu harimau yang lapar. Harimau itu ingin memakannya."
+    },
+    {
+      en: "(Resolution) The smart rabbit tricked the tiger, and the scared tiger ran away.",
+      id: "(Resolution / Penyelesaian) Kelinci yang cerdas itu mengelabui sang harimau, dan harimau yang ketakutan itu lari."
+    }
+  ]
+};
     const quizDatabase = {
       "Tenses": [
         { q: "She _____ to the jungle yesterday.", a: ["go", "went", "gone", "going"], right: 1 },
@@ -1299,18 +1345,10 @@
         bodyHTML = `<div id="recount-detail-box"></div>`;
         document.getElementById('content-body').innerHTML = bodyHTML;
         renderRecountDetail();
-      } else {
-        bodyHTML = `
-          <div class="lang-text" 
-            data-en="<h3 style='color: var(--primary-green); font-size: 1rem; margin-bottom: 6px;'>Narrative Text</h3><p style='line-height:1.5; font-size: 0.85rem;'>Fictional story, legend, or myth created to entertain the readers.</p><br><p style='font-size: 0.85rem;'><strong>Generic Structure:</strong></p><ul style='margin-left: 18px; line-height:1.5; font-size: 0.8rem;'><li><strong>Orientation:</strong> Introduces the characters, place, and time.</li><li><strong>Complication:</strong> The conflict or main problem begins to arise.</li><li><strong>Resolution:</strong> The problem is solved (happy or sad ending).</li></ul>"
-            data-id="<h3 style='color: var(--primary-green); font-size: 1rem; margin-bottom: 6px;'>Narrative Text (Teks Naratif)</h3><p style='line-height:1.5; font-size: 0.85rem;'>Cerita fiksi, legenda, atau dongeng yang dibuat untuk menghibur para pembaca.</p><br><p style='font-size: 0.85rem;'><strong>Struktur Umum (Generic Structure):</strong></p><ul style='margin-left: 18px; line-height:1.5; font-size: 0.8rem;'><li><strong>Orientation (Pengenalan):</strong> Mengenalkan tokoh, tempat, dan waktu cerita.</li><li><strong>Complication (Konflik/Masalah):</strong> Masalah utama mulai muncul dalam cerita.</li><li><strong>Resolution (Penyelesaian):</strong> Masalah berhasil diatasi (akhir bahagia/sedih).</li></ul>">
-            ${currentLang === 'en'
-              ? "<h3 style='color: var(--primary-green); font-size: 1rem; margin-bottom: 6px;'>Narrative Text</h3><p style='line-height:1.5; font-size: 0.85rem;'>Fictional story, legend, or myth created to entertain the readers.</p><br><p style='font-size: 0.85rem;'><strong>Generic Structure:</strong></p><ul style='margin-left: 18px; line-height:1.5; font-size: 0.8rem;'><li><strong>Orientation:</strong> Introduces the characters, place, and time.</li><li><strong>Complication:</strong> The conflict or main problem begins to arise.</li><li><strong>Resolution:</strong> The problem is solved (happy or sad ending).</li></ul>"
-              : "<h3 style='color: var(--primary-green); font-size: 1rem; margin-bottom: 6px;'>Narrative Text (Teks Naratif)</h3><p style='line-height:1.5; font-size: 0.85rem;'>Cerita fiksi, legenda, atau dongeng yang dibuat untuk menghibur para pembaca.</p><br><p style='font-size: 0.85rem;'><strong>Struktur Umum (Generic Structure):</strong></p><ul style='margin-left: 18px; line-height:1.5; font-size: 0.8rem;'><li><strong>Orientation (Pengenalan):</strong> Mengenalkan tokoh, tempat, dan waktu cerita.</li><li><strong>Complication (Konflik/Masalah):</strong> Masalah utama mulai muncul dalam cerita.</li><li><strong>Resolution (Penyelesaian):</strong> Masalah berhasil diatasi (akhir bahagia/sedih).</li></ul>"
-            }
-          </div>
-        `;
+           } else {
+        bodyHTML = `<div id="narrative-detail-box"></div>`;
         document.getElementById('content-body').innerHTML = bodyHTML;
+        renderNarrativeDetail();
       }
 
       navigateTo('content-screen');
@@ -1408,6 +1446,44 @@
       container.innerHTML = navHTML + `<div class="tense-section-content">${contentHTML}</div>`;
     }
 
+function selectNarrativeTab(tabName) {
+  activeNarrativeTab = tabName;
+  renderNarrativeDetail();
+}
+
+function renderNarrativeDetail() {
+  const container = document.getElementById('narrative-detail-box');
+  if (!container) return;
+
+  const tabs = [
+    ['meaning', 'Meaning'],
+    ['purpose', 'Purpose'],
+    ['structure', 'Structure'],
+    ['types', 'Types'],
+    ['language', 'Language'],
+    ['example', 'Example']
+  ];
+
+  const navHTML = `
+    <div class="tense-nav-tabs" style="flex-wrap: wrap;">
+      ${tabs.map(t => `<button class="tense-tab-btn ${activeNarrativeTab === t[0] ? 'active' : ''}" onclick="selectNarrativeTab('${t[0]}')">${t[1]}</button>`).join('')}
+    </div>
+  `;
+
+  let contentHTML = "";
+  if (activeNarrativeTab === 'example') {
+    contentHTML = narrativeData.example.map(item => `
+      <div class="example-item">
+        <div class="example-en">${item.en}</div>
+        <div class="example-id">${currentLang === 'id' ? 'Terjemahan: ' + item.id : ''}</div>
+      </div>
+    `).join('');
+  } else {
+    contentHTML = narrativeData[activeNarrativeTab][currentLang];
+  }
+
+  container.innerHTML = navHTML + `<div class="tense-section-content">${contentHTML}</div>`;
+}
     function toggleTranslate() {
       currentLang = currentLang === 'en' ? 'id' : 'en';
       
@@ -1420,6 +1496,8 @@
         renderTenseDetail();
       } else if (currentTopic === 'Recount Text') {
         renderRecountDetail();
+      } else if (currentTopic === 'Narrative Text') {
+        renderNarrativeDetail();
       }
     }
 
